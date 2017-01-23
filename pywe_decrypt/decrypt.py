@@ -6,6 +6,10 @@ import json
 from Crypto.Cipher import AES
 
 
+# Decrypt Algorithm
+#   See: https://mp.weixin.qq.com/debug/wxadoc/dev/api/signature.html
+
+
 class WXBizDataCrypt:
     def __init__(self, appId, sessionKey):
         self.appId = appId
