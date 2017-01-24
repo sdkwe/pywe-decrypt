@@ -4,14 +4,6 @@ pywe-decrypt
 
 Wechat Decrypt Module for Python for MiniApp.
 
-Requirement
-===========
-
-::
-
-    cryptography
-
-
 Installation
 ============
 

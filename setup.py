@@ -20,7 +20,7 @@ setup(
 
     packages=['pywe_decrypt'],
     py_modules=[],
-    install_requires=['cryptography'],
+    install_requires=['pycrypto'],
 
     classifiers=[
         "License :: OSI Approved :: BSD License",
