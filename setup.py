@@ -3,7 +3,7 @@
 from setuptools import setup
 
 
-version = '1.0.1'
+version = '1.0.2'
 
 
 setup(
@@ -20,7 +20,7 @@ setup(
 
     packages=['pywe_decrypt'],
     py_modules=[],
-    install_requires=['pycrypto', 'pywe-xml>=1.0.1'],
+    install_requires=['pycrypto', 'pywe-xml>=1.0.2'],
 
     classifiers=[
         "License :: OSI Approved :: BSD License",
