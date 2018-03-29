@@ -9,8 +9,8 @@ version = '1.0.1'
 setup(
     name='pywe-decrypt',
     version=version,
-    keywords='Wechat Weixin Decrypt MiniApp',
-    description='Wechat Decrypt Module for Python for MiniApp.',
+    keywords='Wechat Weixin Decrypt',
+    description='Wechat Decrypt Module for Python.',
     long_description=open('README.rst').read(),
 
     url='https://github.com/sdkwe/pywe-decrypt',
@@ -20,7 +20,7 @@ setup(
 
     packages=['pywe_decrypt'],
     py_modules=[],
-    install_requires=['pycrypto'],
+    install_requires=['pycrypto', 'pywe-xml>=1.0.1'],
 
     classifiers=[
         "License :: OSI Approved :: BSD License",

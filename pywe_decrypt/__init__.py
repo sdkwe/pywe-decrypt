@@ -1,3 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from pywe_decrypt.decrypt import decrypt
+# For backwards compatibility
+# New Use ``from pywe_decrypt import data, msg`` Instead
+from pywe_decrypt.data import decrypt

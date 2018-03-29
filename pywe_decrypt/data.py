@@ -35,5 +35,4 @@ class WXBizDataCrypt:
 
 
 def decrypt(appId, sessionKey=None, encryptedData=None, iv=None):
-    pc = WXBizDataCrypt(appId, sessionKey)
-    return pc.decrypt(encryptedData, iv)
+    return WXBizDataCrypt(appId, sessionKey).decrypt(encryptedData, iv)

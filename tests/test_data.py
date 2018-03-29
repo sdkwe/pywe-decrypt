@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from pywe_decrypt import decrypt
+from pywe_decrypt.data import decrypt
 
 
-class TestDecryptCommands(object):
+class TestDataDecryptCommands(object):
 
     def test_decrypt(self):
         appId = 'wx4f4bc4dec97d474b'
