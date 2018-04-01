@@ -26,7 +26,7 @@ Method
 
 ::
 
-    def decrypt(appid, sessionKey=None, encryptedData=None, iv=None):
+    def decrypt(appId, sessionKey=None, encryptedData=None, iv=None):
 
     def encrypt(appid, token=None, encodingaeskey=None, resp_xml=None, nonce=None, timestamp=None, random_str=None):
 
