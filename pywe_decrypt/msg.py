@@ -53,13 +53,13 @@ class Prpcrypt(object):
         # 设置加解密模式为 AES 的 CBC 模式
         self.mode = AES.MODE_CBC
 
-    def encrypt(self, appId, text, random_str=None):
+    def encrypt(self, appid, text, random_str=None):
         """ 对明文进行加密
         @param text: 需要加密的明文
         @return: 加密得到的字符串
         """
         # 16 位随机字符串添加到明文开头
-        text = '{0}{1}{2}{3}'.format(random_str if random_str else random_string(16), struct.pack('I', socket.htonl(len(text))), text, appId)
+        text = '{0}{1}{2}{3}'.format(random_str if random_str else random_string(16), struct.pack('I', socket.htonl(len(text))), text, appid)
         # 使用自定义的填充方式对明文进行补位填充
         text = PKCS7Encoder().encode(text)
         # 加密
@@ -67,7 +67,7 @@ class Prpcrypt(object):
         # 使用 BASE64 对加密后的字符串进行编码
         return base64.b64encode(ciphertext)
 
-    def decrypt(self, text, appId):
+    def decrypt(self, text, appid):
         """ 对解密后的明文进行补位删除
         @param text: 密文
         @return: 删除填充补位后的明文
@@ -82,7 +82,7 @@ class Prpcrypt(object):
         xml_content = content[4:xml_len + 4]
         from_appid = content[xml_len + 4:]
 
-        if from_appid != appId:
+        if from_appid != appid:
             return None
 
         return xml_content
@@ -91,12 +91,12 @@ class Prpcrypt(object):
 class WXBizMsgCrypt(object):
     # 构造函数
     # @param token: 公众平台上，开发者设置的 Token
-    # @param EncodingAESKey: 公众平台上，开发者设置的 EncodingAESKey
-    # @param appId: 企业号的 AppId
-    def __init__(self, appId, token, EncodingAESKey):
-        self.key = base64.b64decode(to_binary(EncodingAESKey + '='))
+    # @param encodingaeskey: 公众平台上，开发者设置的 EncodingAESKey
+    # @param appid: 企业号的 AppId
+    def __init__(self, appid, token, encodingaeskey):
+        self.key = base64.b64decode(to_binary(encodingaeskey + '='))
         assert len(self.key) == 32
-        self.appId = appId
+        self.appid = appid
         self.token = token
 
     def encrypt(self, resp_xml, nonce, timestamp=None, random_str=None):
@@ -105,7 +105,7 @@ class WXBizMsgCrypt(object):
         # @param timestamp: 时间戳，可以自己生成，也可以用 URL 参数的 timestamp, 如为 None 则自动用当前时间
         # @param nonce: 随机串，可以自己生成，也可以用 URL 参数的 nonce
         # return： EncryptMsg, 加密后的可以直接回复用户的密文，包括 msg_signature，timestamp, nonce, encrypt 的 xml 格式的字符串
-        encrypt = Prpcrypt(self.key).encrypt(self.appId, resp_xml, random_str)
+        encrypt = Prpcrypt(self.key).encrypt(self.appid, resp_xml, random_str)
         if timestamp is None:
             timestamp = int(time.time())
         # 生成安全签名
@@ -122,14 +122,14 @@ class WXBizMsgCrypt(object):
         # 验证安全签名
         if not check_msg_signature(self.token, msg_signature, str(timestamp), nonce, encrypt):
             return None
-        return Prpcrypt(self.key).decrypt(encrypt, self.appId)
+        return Prpcrypt(self.key).decrypt(encrypt, self.appid)
 
 
-def encrypt(appId, token=None, EncodingAESKey=None, resp_xml=None, nonce=None, timestamp=None, random_str=None):
-    return WXBizMsgCrypt(appId, token, EncodingAESKey).encrypt(resp_xml, nonce, timestamp, random_str)
+def encrypt(appid, token=None, encodingaeskey=None, resp_xml=None, nonce=None, timestamp=None, random_str=None):
+    return WXBizMsgCrypt(appid, token, encodingaeskey).encrypt(resp_xml, nonce, timestamp, random_str)
 
 
-def decrypt(appId, token=None, EncodingAESKey=None, post_data=None, encrypt=None, msg_signature=None, timestamp=None, nonce=None):
+def decrypt(appid, token=None, encodingaeskey=None, post_data=None, encrypt=None, msg_signature=None, timestamp=None, nonce=None):
     if post_data and not encrypt:
         encrypt = xml_to_dict(post_data).get('Encrypt', '')
-    return WXBizMsgCrypt(appId, token, EncodingAESKey).decrypt(encrypt, msg_signature, timestamp, nonce)
+    return WXBizMsgCrypt(appid, token, encodingaeskey).decrypt(encrypt, msg_signature, timestamp, nonce)
