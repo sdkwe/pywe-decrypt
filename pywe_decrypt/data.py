@@ -11,8 +11,8 @@ from Crypto.Cipher import AES
 
 
 class WXBizDataCrypt:
-    def __init__(self, appid, sessionKey):
-        self.appid = appid
+    def __init__(self, appId, sessionKey):
+        self.appId = appId
         self.sessionKey = sessionKey
 
     def decrypt(self, encryptedData, iv):
@@ -25,7 +25,7 @@ class WXBizDataCrypt:
 
         decrypted = json.loads(self._unpad(cipher.decrypt(encryptedData)))
 
-        if decrypted['watermark']['appid'] != self.appid:
+        if decrypted['watermark']['appid'] != self.appId:
             raise Exception('Invalid Buffer')
 
         return decrypted
@@ -34,5 +34,5 @@ class WXBizDataCrypt:
         return s[:-ord(s[len(s) - 1:])]
 
 
-def decrypt(appid, sessionKey=None, encryptedData=None, iv=None):
-    return WXBizDataCrypt(appid, sessionKey).decrypt(encryptedData, iv)
+def decrypt(appId, sessionKey=None, encryptedData=None, iv=None):
+    return WXBizDataCrypt(appId, sessionKey).decrypt(encryptedData, iv)
