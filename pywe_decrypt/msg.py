@@ -133,4 +133,4 @@ def decrypt(appid, token=None, encodingaeskey=None, post_data=None, encrypt=None
     if post_data and not encrypt:
         encrypt = xml_to_dict(post_data).get('Encrypt', '')
     xml = WXBizMsgCrypt(appid, token, encodingaeskey).decrypt(encrypt, msg_signature, timestamp, nonce)
-    return xml_to_dict(xml) if xmltodict else xml
+    return xml_to_dict(xml) if xmltodict and xml else xml
