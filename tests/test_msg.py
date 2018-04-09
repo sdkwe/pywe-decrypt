@@ -40,3 +40,5 @@ class TestMsgDecryptCommands(object):
 </xml>"""
         result = decrypt(appid, token, encodingaeskey, post_data=post_data, encrypt=None, msg_signature=msg_signature, timestamp=timestamp, nonce=nonce)
         assert result == final_xml
+        result = decrypt(appid, token, encodingaeskey, post_data=post_data, encrypt=None, msg_signature=msg_signature, timestamp=timestamp, nonce=nonce, xmltodict=True)
+        assert isinstance(result, dict)
