@@ -126,10 +126,14 @@ class WXBizMsgCrypt(object):
 
 
 def encrypt(appid, token=None, encodingaeskey=None, resp_xml=None, nonce=None, timestamp=None, random_str=None):
+    if not encodingaeskey:
+        return resp_xml
     return WXBizMsgCrypt(appid, token, encodingaeskey).encrypt(resp_xml, nonce, timestamp, random_str)
 
 
 def decrypt(appid, token=None, encodingaeskey=None, post_data=None, encrypt=None, msg_signature=None, timestamp=None, nonce=None, xmltodict=False):
+    if not encodingaeskey:
+        return post_data
     if post_data and not encrypt:
         encrypt = xml_to_dict(post_data).get('Encrypt', '')
     xml = WXBizMsgCrypt(appid, token, encodingaeskey).decrypt(encrypt, msg_signature, timestamp, nonce)
