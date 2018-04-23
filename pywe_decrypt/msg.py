@@ -58,6 +58,9 @@ class Prpcrypt(object):
         @param text: 需要加密的明文
         @return: 加密得到的字符串
         """
+        # If Not Convert
+        # Will raise ``UnicodeEncodeError: 'ascii' codec can't encode characters``
+        text = to_binary(text)
         # 16 位随机字符串添加到明文开头
         text = '{0}{1}{2}{3}'.format(random_str if random_str else random_string(16), struct.pack('I', socket.htonl(len(text))), text, appid)
         # 使用自定义的填充方式对明文进行补位填充
