@@ -1,15 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import base64
-import collections
-import socket
-import struct
-import time
 
 from Crypto.Cipher import AES
-from pywe_sign import calculate_msg_signature, check_msg_signature
-from pywe_utils import random_string, to_binary
-from pywe_xml import dict_to_xml, xml_to_dict
 
 
 # Market Code Decrypt Algorithm
