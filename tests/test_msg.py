@@ -20,7 +20,7 @@ class TestMsgDecryptCommands(object):
 <Nonce><![CDATA[1320562132]]></Nonce>
 </xml>"""
         result = encrypt(appid, token, encodingaeskey, resp_xml, nonce, timestamp, random_str)
-        print result
+        print(result)
         assert result == final_xml
 
     def test_msg_decrypt(self):
