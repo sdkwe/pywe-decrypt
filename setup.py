@@ -25,7 +25,7 @@ setup(
     # pip3 uninstall pycrypto
     # pip3 uninstall pycryptodome
     # pip3 install pycryptodome
-    install_requires=['pycryptodome', 'pywe-sign>=1.0.8', 'pywe-xml>=1.0.3'],
+    install_requires=['pycryptodome', 'pywe-sign>=1.0.8', 'pywe_utils', 'pywe-xml>=1.0.3'],
 
     classifiers=[
         "License :: OSI Approved :: BSD License",
